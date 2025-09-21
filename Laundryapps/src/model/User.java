@@ -41,7 +41,8 @@ public class User {
 		user.setId("1");
 		user.setNama("fazil");
 		user.setUsername("fazil");
-		user.setPassword("12345");
+		user.setPassword("12345");		
+		
 		
 		if(user.getUsername().equalsIgnoreCase(username)
 				&& user.getPassword().equalsIgnoreCase(password)) {

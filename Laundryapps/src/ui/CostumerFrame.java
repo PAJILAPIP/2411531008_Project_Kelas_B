@@ -1,47 +1,41 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import DAO.UserRepo;
-import model.User;
-import table.TableUser;
-
-import java.awt.CardLayout;
-import javax.swing.JTable;
-import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.util.List;
 
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.Color;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import DAO.CostumerRepo;
+import model.Costumer;
+import table.TableCostumer;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class UserFrame extends JFrame {
+public class CostumerFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable tableUsers;
-	private JTextField txtName;
-	private JTextField txtUsername;
-	private JTextField txtPassword;
+	private JTable tableCostumer;
+	private JTextField txtNama;
+	private JTextField txtNomorHp;
 	private JButton btnUpdate;
 	private JButton btnDelete;
 	private JButton btnCancel;
+	private JTextField txtAlamat;
 	
-	
-	UserRepo usr = new UserRepo();
-	List<User> ls;
+	CostumerRepo csr = new CostumerRepo();
+	List<Costumer> ls;
 	public String id;
 
 	/**
@@ -51,12 +45,12 @@ public class UserFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserFrame frame = new UserFrame();
+					CostumerFrame frame = new CostumerFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				UserFrame frame = new UserFrame();
+				CostumerFrame frame = new CostumerFrame();
 				frame.setVisible(true);
 				frame.loadTable();
 			}
@@ -64,23 +58,23 @@ public class UserFrame extends JFrame {
 	}
 	
 	public void reset() {
-		txtName.setText("");
-		txtUsername.setText("");
-		txtPassword.setText("");
+		txtNama.setText("");
+		txtAlamat.setText("");
+		txtNomorHp.setText("");
 	}
 	
 	public void loadTable() {
-		ls = usr.Show();
-		TableUser tu = new TableUser(ls);
-		tableUsers.setModel(tu);
-		tableUsers.getTableHeader().setVisible(true);
+		ls = csr.Show();
+		TableCostumer tu = new TableCostumer(ls);
+		tableCostumer.setModel(tu);
+		tableCostumer.getTableHeader().setVisible(true);
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public UserFrame() {
-		setTitle("User");
+	public CostumerFrame() {
+		setTitle("Costumer");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 609, 666);
 		contentPane = new JPanel();
@@ -89,61 +83,61 @@ public class UserFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		tableUsers = new JTable();
-		tableUsers.addMouseListener(new MouseAdapter() {
+		tableCostumer = new JTable();
+		tableCostumer.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				id = tableUsers.getValueAt(tableUsers.getSelectedRow(), 0).toString();
-				txtName.setText(tableUsers.getValueAt(tableUsers.getSelectedRow(),  1).toString());
-				txtUsername.setText(tableUsers.getValueAt(tableUsers.getSelectedRow(),  2).toString());
-				txtPassword.setText(tableUsers.getValueAt(tableUsers.getSelectedRow(),  3).toString());
+				id = tableCostumer.getValueAt(tableCostumer.getSelectedRow(), 0).toString();
+				txtNama.setText(tableCostumer.getValueAt(tableCostumer.getSelectedRow(),  1).toString());
+				txtAlamat.setText(tableCostumer.getValueAt(tableCostumer.getSelectedRow(),  2).toString());
+				txtNomorHp.setText(tableCostumer.getValueAt(tableCostumer.getSelectedRow(),  3).toString());
 			}
 			
 		});
-		tableUsers.setBounds(10, 295, 575, 324);
-		contentPane.add(tableUsers);
+		tableCostumer.setBounds(10, 295, 575, 324);
+		contentPane.add(tableCostumer);
 		
-		JLabel lblNewLabel = new JLabel("Name");
+		JLabel lblNewLabel = new JLabel("Nama");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(43, 56, 79, 34);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblUsername.setBounds(43, 100, 79, 34);
-		contentPane.add(lblUsername);
+		JLabel lblCostumername = new JLabel("Alamat");
+		lblCostumername.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblCostumername.setBounds(43, 100, 79, 34);
+		contentPane.add(lblCostumername);
 		
-		JLabel lblPassword = new JLabel("Password");
+		JLabel lblPassword = new JLabel("Nomor HP");
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPassword.setBounds(43, 144, 79, 34);
 		contentPane.add(lblPassword);
 		
-		txtName = new JTextField();
-		txtName.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtName.setBounds(132, 56, 412, 34);
-		contentPane.add(txtName);
-		txtName.setColumns(10);
+		txtNama = new JTextField();
+		txtNama.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtNama.setBounds(132, 56, 412, 34);
+		contentPane.add(txtNama);
+		txtNama.setColumns(10);
 		
-		txtUsername = new JTextField();
-		txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtUsername.setColumns(10);
-		txtUsername.setBounds(132, 100, 412, 34);
-		contentPane.add(txtUsername);
+		txtAlamat = new JTextField();
+		txtAlamat.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtAlamat.setColumns(10);
+		txtAlamat.setBounds(132, 100, 412, 34);
+		contentPane.add(txtAlamat);
 		
-		txtPassword = new JTextField();
-		txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtPassword.setColumns(10);
-		txtPassword.setBounds(132, 144, 412, 34);
-		contentPane.add(txtPassword);
+		txtNomorHp = new JTextField();
+		txtNomorHp.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtNomorHp.setColumns(10);
+		txtNomorHp.setBounds(132, 144, 412, 34);
+		contentPane.add(txtNomorHp);
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				User user = new User();
-				user.setNama(txtName.getText());
-				user.setUsername(txtUsername.getText());
-				user.setPassword(txtPassword.getText());
-				usr.save(user);
+				Costumer costumer = new Costumer();
+				costumer.setNama(txtNama.getText());
+				costumer.setAlamat(txtAlamat.getText());
+				costumer.setNomorHp(txtNomorHp.getText());
+				csr.save(costumer);
 				reset();
 			}
 		});
@@ -155,16 +149,17 @@ public class UserFrame extends JFrame {
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				User user = new User();
-				user.setNama(txtName.getText());
-				user.setUsername(txtUsername.getText());
-				user.setPassword(txtPassword.getText());
-				user.setId(id);
-				usr.update(user);
+				Costumer costumer = new Costumer();
+				costumer.setNama(txtNama.getText());
+				costumer.setAlamat(txtAlamat.getText());
+				costumer.setNomorHp(txtNomorHp.getText());
+				costumer.setId(id);
+				csr.update(costumer);
 				reset();
 				loadTable();
 			}
 		});
+		
 		btnUpdate.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnUpdate.setBackground(new Color(65, 105, 225));
 		btnUpdate.setBounds(227, 210, 99, 34);
@@ -174,7 +169,7 @@ public class UserFrame extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(id != null) {
-					usr.delete(id);
+					csr.delete(id);
 					reset();
 					loadTable();
 				}else {
@@ -192,5 +187,6 @@ public class UserFrame extends JFrame {
 		btnCancel.setBackground(Color.YELLOW);
 		btnCancel.setBounds(445, 210, 99, 34);
 		contentPane.add(btnCancel);
+		
 	}
 }

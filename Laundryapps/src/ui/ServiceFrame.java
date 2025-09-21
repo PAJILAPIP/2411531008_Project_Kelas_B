@@ -1,47 +1,41 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import DAO.UserRepo;
-import model.User;
-import table.TableUser;
-
-import java.awt.CardLayout;
-import javax.swing.JTable;
-import javax.swing.JSeparator;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.util.List;
 
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import java.awt.Color;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import DAO.ServiceRepo;
+import model.Service;
+import table.TableService;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class UserFrame extends JFrame {
+public class ServiceFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable tableUsers;
-	private JTextField txtName;
-	private JTextField txtUsername;
-	private JTextField txtPassword;
+	private JTable tableService;
+	private JTextField txtJenis;
+	private JTextField txtStatus;
 	private JButton btnUpdate;
 	private JButton btnDelete;
 	private JButton btnCancel;
+	private JTextField txtHarga;
 	
-	
-	UserRepo usr = new UserRepo();
-	List<User> ls;
+	ServiceRepo srv = new ServiceRepo();
+	List<Service> ls;
 	public String id;
 
 	/**
@@ -51,12 +45,12 @@ public class UserFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					UserFrame frame = new UserFrame();
+					ServiceFrame frame = new ServiceFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				UserFrame frame = new UserFrame();
+				ServiceFrame frame = new ServiceFrame();
 				frame.setVisible(true);
 				frame.loadTable();
 			}
@@ -64,23 +58,23 @@ public class UserFrame extends JFrame {
 	}
 	
 	public void reset() {
-		txtName.setText("");
-		txtUsername.setText("");
-		txtPassword.setText("");
+		txtJenis.setText("");
+		txtHarga.setText("");
+		txtStatus.setText("");
 	}
 	
 	public void loadTable() {
-		ls = usr.Show();
-		TableUser tu = new TableUser(ls);
-		tableUsers.setModel(tu);
-		tableUsers.getTableHeader().setVisible(true);
+		ls = srv.Show();
+		TableService tu = new TableService(ls);
+		tableService.setModel(tu);
+		tableService.getTableHeader().setVisible(true);
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public UserFrame() {
-		setTitle("User");
+	public ServiceFrame() {
+		setTitle("Service");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 609, 666);
 		contentPane = new JPanel();
@@ -89,63 +83,63 @@ public class UserFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		tableUsers = new JTable();
-		tableUsers.addMouseListener(new MouseAdapter() {
+		tableService = new JTable();
+		tableService.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				id = tableUsers.getValueAt(tableUsers.getSelectedRow(), 0).toString();
-				txtName.setText(tableUsers.getValueAt(tableUsers.getSelectedRow(),  1).toString());
-				txtUsername.setText(tableUsers.getValueAt(tableUsers.getSelectedRow(),  2).toString());
-				txtPassword.setText(tableUsers.getValueAt(tableUsers.getSelectedRow(),  3).toString());
+				id = tableService.getValueAt(tableService.getSelectedRow(), 0).toString();
+				txtJenis.setText(tableService.getValueAt(tableService.getSelectedRow(),  1).toString());
+				txtHarga.setText(tableService.getValueAt(tableService.getSelectedRow(),  2).toString());
+				txtStatus.setText(tableService.getValueAt(tableService.getSelectedRow(),  3).toString());
 			}
 			
 		});
-		tableUsers.setBounds(10, 295, 575, 324);
-		contentPane.add(tableUsers);
+		tableService.setBounds(10, 295, 575, 324);
+		contentPane.add(tableService);
 		
-		JLabel lblNewLabel = new JLabel("Name");
+		JLabel lblNewLabel = new JLabel("Jenis");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblNewLabel.setBounds(43, 56, 79, 34);
 		contentPane.add(lblNewLabel);
 		
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblUsername.setBounds(43, 100, 79, 34);
-		contentPane.add(lblUsername);
+		JLabel lblServicename = new JLabel("Harga");
+		lblServicename.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblServicename.setBounds(43, 100, 79, 34);
+		contentPane.add(lblServicename);
 		
-		JLabel lblPassword = new JLabel("Password");
+		JLabel lblPassword = new JLabel("Status");
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblPassword.setBounds(43, 144, 79, 34);
 		contentPane.add(lblPassword);
 		
-		txtName = new JTextField();
-		txtName.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtName.setBounds(132, 56, 412, 34);
-		contentPane.add(txtName);
-		txtName.setColumns(10);
+		txtJenis = new JTextField();
+		txtJenis.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtJenis.setBounds(132, 56, 412, 34);
+		contentPane.add(txtJenis);
+		txtJenis.setColumns(10);
 		
-		txtUsername = new JTextField();
-		txtUsername.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtUsername.setColumns(10);
-		txtUsername.setBounds(132, 100, 412, 34);
-		contentPane.add(txtUsername);
+		txtHarga = new JTextField();
+		txtHarga.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtHarga.setColumns(10);
+		txtHarga.setBounds(132, 100, 412, 34);
+		contentPane.add(txtHarga);
 		
-		txtPassword = new JTextField();
-		txtPassword.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		txtPassword.setColumns(10);
-		txtPassword.setBounds(132, 144, 412, 34);
-		contentPane.add(txtPassword);
+		txtStatus = new JTextField();
+		txtStatus.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		txtStatus.setColumns(10);
+		txtStatus.setBounds(132, 144, 412, 34);
+		contentPane.add(txtStatus);
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				User user = new User();
-				user.setNama(txtName.getText());
-				user.setUsername(txtUsername.getText());
-				user.setPassword(txtPassword.getText());
-				usr.save(user);
-				reset();
-			}
+				Service service = new Service();
+			    service.setJenis(txtJenis.getText());
+			    service.setHarga(txtHarga.getText());
+			    service.setStatus(txtStatus.getText());
+			    srv.save(service);
+			    reset();
+			    loadTable();}
 		});
 		btnSave.setBackground(new Color(50, 205, 50));
 		btnSave.setFont(new Font("Tahoma", Font.PLAIN, 15));
@@ -155,16 +149,17 @@ public class UserFrame extends JFrame {
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				User user = new User();
-				user.setNama(txtName.getText());
-				user.setUsername(txtUsername.getText());
-				user.setPassword(txtPassword.getText());
-				user.setId(id);
-				usr.update(user);
-				reset();
-				loadTable();
+				Service service = new Service();
+			    service.setJenis(txtJenis.getText());
+			    service.setHarga(txtHarga.getText());
+			    service.setStatus(txtStatus.getText());
+			    service.setId(id);
+			    srv.update(service);
+			    reset();
+			    loadTable();
 			}
 		});
+		
 		btnUpdate.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnUpdate.setBackground(new Color(65, 105, 225));
 		btnUpdate.setBounds(227, 210, 99, 34);
@@ -174,7 +169,7 @@ public class UserFrame extends JFrame {
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(id != null) {
-					usr.delete(id);
+					srv.delete(id);
 					reset();
 					loadTable();
 				}else {
@@ -192,5 +187,6 @@ public class UserFrame extends JFrame {
 		btnCancel.setBackground(Color.YELLOW);
 		btnCancel.setBounds(445, 210, 99, 34);
 		contentPane.add(btnCancel);
+		
 	}
 }
